@@ -43,7 +43,7 @@ Open the generated .sln file in Visual Studio.
 
 After building, run the game using the framework executable:
 
-GFXFramework.exe
+build\bin\Debug\GFXFramework.exe
 
 ## Gameplay
 1. Garage Mode
