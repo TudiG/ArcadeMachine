@@ -46,21 +46,11 @@ After building, run the game using the framework executable:
 build\bin\Debug\GFXFramework.exe
 
 ## Gameplay
-1. Garage Mode
+### 1. Garage Mode
 
 Drag blocks from the left panel onto the grid to build your ship.
 
-Types of blocks:
-
-Engine: Required for propulsion.
-
-Cannon: Fires projectiles at enemies.
-
-Bumper: Defensive component.
-
-Solid: Structural block.
-
-### Ship validation rules:
+#### Ship validation rules:
 
 Must have at least 1 and at most 10 blocks.
 
@@ -70,9 +60,9 @@ Cannon cannot have blocks above it; Engine cannot have blocks below it.
 
 Bumpers cannot overlap improperly.
 
-### Click Start when the ship is valid to enter the game.
+#### Click Start when the ship is valid to enter the game.
 
-2. Game Mode
+### 2. Game Mode
 
 Control the ship with WASD keys.
 
