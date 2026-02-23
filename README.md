@@ -1,195 +1,115 @@
-# GFX Framework
+# Chicken Invaders – Grid-Based Shooter
 
-## :sparkles: Introduction
+## Description
+Chicken Invaders is a 2D arcade-style shooter with a custom ship-building mechanic.  
+Players design their ship in a garage using blocks (engine, cannon, bumper, solid), then face waves of enemy chickens.  
 
-This project is a tiny graphics framework used by the Computer Graphics Department of the Polytechnic University of Bucharest.
-It is currently used as teaching and study material for a number of courses of increasing complexity, including, but not limited to:
+## Features:
+- Drag-and-drop ship construction in a garage.
+- Grid-based ship validation ensuring playable designs.
+- Enemy waves with sinusoidal movement and randomized shooting.
+- Upgradeable ship speed and projectile speed.
+- Particle effects for destroyed enemies.
+- Game-over screen with score tracking.
 
--   **`EGC`** Elements of Computer Graphics, BSc year 3 &mdash; [course materials (RO)](https://ocw.cs.pub.ro/courses/egc)
--   **`PGAPI`** Advanced Graphics Programming and Image Processing, BSc year 4 &mdash; [course materials (RO)](https://ocw.cs.pub.ro/courses/pgapi)
+## Requirements
+- C++17 or higher
+- Visual Studio 2022 (or later)
+- CMake 3.16+
+- OpenGL 3.3+ compatible GPU
 
-The functionality is split into several modules of increasing difficulty (`m1`, `m2`, etc.).
+## Build Instructions
 
-You can read more about it [in the docs](docs/home.md).
+1. **Clone the repository:**
 
-It has missing and closed-source functionality that you will need to implement.
+git clone <your-repo-url>
+cd ChickenInvaders
 
-The code is cross-platform, and supports the following architectures:
+2. Create a build folder:
 
--   Windows: `i686`, `x86_64`, `arm64`
--   Linux: `i686`, `x86_64`, `arm64`
--   macOS: `x86_64`, `arm64`
+mkdir build
 
+cd build
 
-## :white_check_mark: Prerequisites
+3. Generate Visual Studio project files with CMake:
 
-This section describes ***what you need to do and install*** before actually building the code.
+cmake ..
 
+4. Build the project:
 
-### Install a compiler
+Open the generated .sln file in Visual Studio.
 
-The compiler requirements are listed below. We strongly recommend to always use the latest compiler versions.
+## Running the Game
 
--   Minimum:
-    -   Windows: Visual Studio 2015 Update 3 with `Programming Languages -> Visual C++` checked when installing
-    -   Linux: `g++` version 5
-    -   macOS: `clang++` version 4
+After building, run the game using the framework executable:
 
--   Recommended:
-    -   Windows: Visual Studio 2022 with `Workloads -> Desktop development with C++` checked when installing
-        -    When installing Visual Studio 2019 or later, double-check that you selected "Desktop development with C++". This should download and install approximately 8 GB of stuff from the Microsoft servers. If you installed Visual Studio and it only took several minutes, you probably missed this step
-    -   Linux: `g++` latest
-    -   macOS: `clang++` latest, by doing one of the following:
-        -   for LLVM/Clang: install [`brew`](https://brew.sh/) then run `brew install llvm`
-        -   for Apple Clang: install XCode
+GFXFramework.exe
 
+## Gameplay
+1. Garage Mode
 
-### Install an editor
+Drag blocks from the left panel onto the grid to build your ship.
 
-We recommend the following editors:
+Types of blocks:
 
--    Windows: Visual Studio (***not*** the same thing as Visual Studio Code)
--    Linux: Visual Studio Code
--    macOS: Visual Studio Code (***do not*** use Visual Studio for Mac, as it's discontinued)
+Engine: Required for propulsion.
 
+Cannon: Fires projectiles at enemies.
 
-### Install or update your graphics drivers
+Bumper: Defensive component.
 
-Use the following steps as a guideline. Detailed instructions differ across manufacturers and operating systems, and are ***not*** covered here.
+Solid: Structural block.
 
--   Update the drivers for your integrated graphics processor (for example, Intel Graphics XXXX)
--   Update the drivers for your dedicated graphics card, if your computer has one:
-    -   for Nvidia cards: https://www.nvidia.com/Download/index.aspx
-    -   for AMD cards: https://www.amd.com/en/support
+### Ship validation rules:
 
-Not updating your drivers may result in the project not working, or displaying a white screen.
+Must have at least 1 and at most 10 blocks.
 
+All blocks must be connected.
 
-### Check your graphics capabilities
+Cannon cannot have blocks above it; Engine cannot have blocks below it.
 
-Graphics capabilities are decided by the combination of your computer's hardware, drivers, and operating system.
+Bumpers cannot overlap improperly.
 
-This project requires OpenGL version ***3.3 core profile, or newer*** for the simpler parts, and version ***4.3 core profile, or newer***  for the more advanced parts. If you have a computer manufactured within the last few years, you should be safe. ***If you're not sure,*** follow the steps in [this guide](docs/user/checking_capabilities.md) to find out.
+### Click Start when the ship is valid to enter the game.
 
+2. Game Mode
 
-### Install the third-party libraries
+Control the ship with WASD keys.
 
-There are some open-source libraries that this project uses. To install them:
+Press SPACE to fire projectiles.
 
--   Windows: you don't need to do anything - all necessary libraries are already provided with the code
+Enemy chickens move sinusoidally and fire projectiles.
 
--   Linux: depending on your distribution, run one of the following scripts as superuser:
-    -   Debian (Ubuntu): `./tools/deps-ubuntu.sh`
-    -   Red Hat (Fedora): `./tools/deps-fedora.sh`
-    -   Arch (x86_64): `./tools/deps-arch.sh`
+Survive waves and earn points for destroying enemies.
 
--   macOS: install [`brew`](https://brew.sh/) then run `./tools/deps-macos.sh`
+Upgrade ship speed (key 1) and projectile speed (key 2) using earned points.
 
+Game ends if enemy projectiles hit your ship or enemies reach the bottom.
 
-### Install the build tools
+## HUD
 
-This project uses [CMake][ref-cmake]. It a nutshell, CMake does not compile source code, instead it creates files that you then use to compile your code (for example, it creates a Makefile on Linux and macOS, a Visual Studio project on Windows, and so on).
+Displays Score, Enemies Remaining, Ship Speed Level, and Projectile Speed Level.
 
-This project requires CMake ***3.16 or newer,*** however, as with the compilers, we strongly recommend that you use the latest version. To install it, follow these steps:
+## Controls
 
--   Windows:
-    1.  go to the [CMake downloads page][ref-cmake-dl]
-    2.  download the latest version of the file called `cmake-<VERSION>-windows-x86_64.msi`
-    3.  install it
+W/A/S/D: Move ship
 
--   Linux:
-    1.  use your package manager to install `cmake`
-    2.  check the version using `cmake --version`
-    3.  depending on the version:
-        -   if it's the minimum required (see above), you're all set
-        -   otherwise, run `./tools/install-cmake.sh && . ~/.profile` in a terminal
+SPACE: Shoot projectiles / restart round
 
--   macOS:
-    1.  run `brew install cmake`
+Mouse Left Click: Drag and drop blocks in garage
 
-After installation, run `cmake --version` to check that it's in your `PATH` environment variable. This should happen automatically, but if it didn't, just add it manually. Instructions on how to add an executable to your `PATH` differ across operating systems and are ***not*** covered here.
+Mouse Right Click: Remove blocks from grid in garage
 
+Mouse: Aim/drag blocks
 
-## :gear: Building
+Number Keys (1/2): Upgrade ship/projectile speed
 
-Open a terminal and go into the root folder of the project, which contains the top-level `CMakeLists.txt` file.
-Do not run CMake directly from the top-level folder (meaning, do not do this: `cmake .`). Instead, make a separate directory, as follows:
+## Notes
 
-1.  `mkdir build`
-2.  `cd build`
-3.  Generate the project:
-    -   for module 1 labs (default): `cmake ..`
-    -   for module 2 labs: `cmake .. -DWITH_LAB_M1=0 -DWITH_LAB_M2=1`
-    -   for extra labs: `cmake .. -DWITH_LAB_M1=0 -DWITH_LAB_EXTRA=1`
-    -   for none (`SimpleScene` only): `cmake .. -DWITH_LAB_M1=0`
-4.  Build the project:
-    -   Windows, one of the following:
-        -   `cmake --build .`
-        -   or just double-click the `.sln` file to open it in Visual Studio, then press `Ctrl+Shift+B` to build it
-    -   Linux and macOS, one of the following:
-        -   `cmake --build .`
-        -   or just `make`
+The game uses a 2D orthographic projection with a consistent logic-to-screen mapping.
 
-That's it! :tada:
+The project separates garage setup from gameplay to simplify ship validation and wave management.
 
-***Note:*** When running the CMake generation step on Windows (meaning, `cmake ..`), you may receive errors that include the phrase `Permission denied`. If you currently have the framework on the `C:` drive, for example on the Desktop, you might not have write permissions. Experimentally, we've found that this happens on single-drive devices (meaning, for example, computers with no disk partition other than `C:`). As an alternative, move the framework on the top-level (directly in `C:`) or create another drive partition (for example `D:`) and move it there.
+## License
 
-
-### Rebuilding
-
-It's very simple to rebuild:
-
--   Every time you modify source code and want to recompile, you only need to follow ***the last step*** (for example, just `make` again)
--   Every time you add/remove/rename a source code file on disk, you need to follow ***the last two steps*** (for example, just `cmake .. && make` again)
--   If something goes wrong when generating the project, just delete the contents of the `build` folder, or the folder itself, then follow all the steps again
-
-
-## :rocket: Running
-
-You can run the project from an IDE, as well as standalone, from anywhere on disk. For example:
-
--   Windows, one of the following:
-    -   `.\bin\Debug\GFXFramework`
-    -   or just open the `.sln` file in Visual Studio, then press `F5` to run it
-
--   Linux and macOS:
-    -   `./bin/Debug/GFXFramework`
-
-To run a certain lab:
-
--   Go into `main.cpp`
--   Find this line:
-    ```cpp
-    World *world = new gfxc::SimpleScene();
-    ```
--   Replace it with whatever you want to run, for example:
-    ```cpp
-    World *world = new m1::Lab1();
-    World *world = new m2::Lab1();
-    World *world = new extra::TessellationShader();
-    // etc.
-    ```
-
-
-## :book: Documentation
-
-All user and developer documentation can be found in the `docs` directory.
-
-
-## :wrench: Contributing
-
-See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more info.
-A future roadmap is ***TBD***.
-
-
-## :page_facing_up: License
-
-This project is available under the [MIT][ref-mit] license; see [LICENSE.md](LICENSE.md) for the full license text.
-This project also includes external libraries that are available under a variety of licenses; see [LEGAL.txt](LEGAL.txt)
-for the full license texts and legal notices.
-
-
-[ref-cmake]:            https://github.com/Kitware/CMake/
-[ref-cmake-dl]:         https://github.com/Kitware/CMake/releases/
-[ref-cmake-build]:      https://github.com/Kitware/CMake#building-cmake-from-scratch
-[ref-mit]:              https://opensource.org/licenses/MIT
+This project is licensed under the MIT License. See LICENSE.md for details.
